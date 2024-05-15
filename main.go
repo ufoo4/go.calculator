@@ -10,7 +10,6 @@ import (
 )
 
 func divideString(input string, n int) string {
-	// Разделяем строку на n частей
 	parts := make([]string, 0, n)
 	length := len(input)
 	partSize := length / n
@@ -56,8 +55,6 @@ func main() {
 	reg := regexp.MustCompile(`\"[+\-*/\s]+`)
 	parts := reg.Split(input, -1)
 	operator := reg.FindAllString(input, -1)
-	//fmt.Println("parts:", parts)
-	//fmt.Println("operator:", operator)
 	for i, v := range operator {
 		operator[i] = strings.Trim(v, `"`)
 	}
@@ -76,7 +73,6 @@ func main() {
 		parts[i] = strings.Trim(v, `"`)
 	}
 
-	//fmt.Println("дебаг. parts и operator", parts[0], parts[1], operator)
 	fmt.Printf("\"%s\"\n", partsOperations(parts, operator))
 
 }
