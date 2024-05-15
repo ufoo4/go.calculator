@@ -9,6 +9,22 @@ import (
 	"strings"
 )
 
+func divideString(input string, n int) string {
+	// Разделяем строку на n частей
+	parts := make([]string, 0, n)
+	length := len(input)
+	partSize := length / n
+
+	for i := 0; i < length; i += partSize {
+		end := i + partSize
+		if end > length {
+			end = length
+		}
+		parts = append(parts, input[i:end])
+	}
+	return parts[0]
+}
+
 func partsOperations(parts, operator []string) string {
 	var answer string
 	switch operator[0] {
@@ -21,8 +37,10 @@ func partsOperations(parts, operator []string) string {
 	case "*":
 		operand2, _ := strconv.Atoi(parts[1])
 		answer = strings.Repeat(parts[0], operand2)
+	case "/":
+		operand2, _ := strconv.Atoi(parts[1])
+		answer = divideString(parts[0], operand2)
 	}
-
 	return answer
 }
 
