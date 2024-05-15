@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -17,6 +18,9 @@ func partsOperations(parts, operator []string) string {
 		answer = parts[0] + parts[1]
 	case "-":
 		answer = strings.Replace(parts[0], parts[1], "", 1)
+	case "*":
+		operand2, _ := strconv.Atoi(parts[1])
+		answer = strings.Repeat(parts[0], operand2)
 	}
 
 	return answer
@@ -31,10 +35,11 @@ func main() {
 		return
 	}
 
-	reg := regexp.MustCompile(`\"[+\-*/\s]+\"`)
+	reg := regexp.MustCompile(`\"[+\-*/\s]+`)
 	parts := reg.Split(input, -1)
 	operator := reg.FindAllString(input, -1)
-
+	//fmt.Println("parts:", parts)
+	//fmt.Println("operator:", operator)
 	for i, v := range operator {
 		operator[i] = strings.Trim(v, `"`)
 	}
@@ -47,13 +52,13 @@ func main() {
 		return
 	}
 	for i, v := range parts {
-		parts[i] = strings.Trim(v, `"`)
-	}
-	for i, v := range parts {
 		parts[i] = strings.TrimSpace(v)
 	}
+	for i, v := range parts {
+		parts[i] = strings.Trim(v, `"`)
+	}
 
-	fmt.Println("дебаг. parts и operator", parts, operator)
-	fmt.Println(partsOperations(parts, operator))
+	//fmt.Println("дебаг. parts и operator", parts[0], parts[1], operator)
+	fmt.Printf("\"%s\"\n", partsOperations(parts, operator))
 
 }
